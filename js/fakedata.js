@@ -1,8 +1,6 @@
-
-
 var fakedata = function(){
 	
-	var dataPointCount = 20,
+	var dataPointCount = 13,
 		gpaHigh = 99,
 		gpaLow = 50;
 		
@@ -25,7 +23,7 @@ var fakedata = function(){
 	
 	noise.seed(Math.random());
 
-	for (var i =0; i<20;i++){
+	for (var i =0; i<dataPointCount;i++){
 		temp = {};
 		//temp.value =  randomIntFromInterval(gpaLow,gpaHigh);
 		temp.value = ls(noise.simplex2(i/4, 0));
