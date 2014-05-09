@@ -1,6 +1,5 @@
-d3.json("http://localhost:8000/js/imp.json",function(data){
-	
-	
+var renderGraph = function(data){
+
 	// line graph svg
 	var lg_svg = d3.select('#line-graph')
 		.append('svg')
@@ -18,8 +17,10 @@ d3.json("http://localhost:8000/js/imp.json",function(data){
 		color = {
 			failRed: "#E3B4B8",
 			passGreen: "#BBEABC"
-		};
-	
+		},
+		totalQuarters = (Math.ceil(data.data.gpa.length * 10)/10),
+		totalYears = totalQuarters/4;
+			
 	// line graph group wrapper for transform
 	var lg_g = lg_svg.append('g')
 		.attr('transform','translate(' + lg_padding_left + ',' + lg_padding_top +')')
@@ -52,15 +53,26 @@ d3.json("http://localhost:8000/js/imp.json",function(data){
 	var lg_grid = lg_g.append('g').attr('id','lg-grid'),
 		lg_Xgrid = lg_grid.append('g').attr('id','lg-Xgrid'),
 		lg_Ygrid = lg_grid.append('g').attr('id','lg-Ygrid');
+		
+	for (var i = -1; i < (totalQuarters*4) - 4;i++){
+		lg_Xgrid.append('line')
+			.attr('x1',xScale((i+1)/4))
+			.attr('y1',0)
+			.attr('x2',xScale((i+1)/4))
+			.attr('y2',full_height)
+			.attr('class','quarter-line');	
+	}
 	
-	for (var i = -1; i < data.data.gpa.length -1;i++){
+	for (var i = 0; i < data.data.gpa.length -1;i++){
 		lg_Xgrid.append('line')
 			.attr('x1',xScale(i+1))
 			.attr('y1',-20)
 			.attr('x2',xScale(i+1))
-			.attr('y2',full_height)
+			.attr('y2',full_height + lg_padding_bottom)
 			.attr('class','year-line');
 	}
+	
+
 	
 	for (var i = 5; i <= 10;i++){
 		lg_Ygrid.append('line')
@@ -69,7 +81,6 @@ d3.json("http://localhost:8000/js/imp.json",function(data){
 			.attr('x2',full_length - xScale(1))
 			.attr('y2',yScale(i*10))
 			.attr('class','gpa-line');
-		
 	}
 	
 	// y axis labels and ticks
@@ -114,5 +125,13 @@ d3.json("http://localhost:8000/js/imp.json",function(data){
 				return color.passGreen;
 			}
 		});
-});
 
+}
+
+renderGraph(fakedata());
+
+/*
+d3.json("http://localhost:8000/js/imp.json",function(data){
+	renderGraph(data);
+});
+*/
