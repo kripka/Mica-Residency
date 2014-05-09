@@ -7,6 +7,15 @@ width: 170px;
 height: auto
 }
 
+header{
+position: absolute;
+left: 0;
+right: 0;
+top: 0;
+height: 85px;
+}
+
+
 
 .navigation-item{
 margin: 20px
@@ -24,8 +33,7 @@ vertical-align: middle;
 }
 
 
-.sidebar{
-font-family: verdana;
+.navigationbar{
 font-size: 11px;
 color: #6A736F;
 float: right;
@@ -33,10 +41,32 @@ margin-top: 18px;
 margin-right: 9px;
 }
 
-.sidebar input{
+.navigationbar input{
 border: none;
 width: 180px;
 padding: 4px;
 background-color: #E2E1E2;
 }
+
+.leftnavigation{
+background-color: #9E9B9C;
+position: absolute;
+top: 85px;
+left: 3px;
+width: 180px;
+bottom: 0px;
+overflow: scroll;
+}
+
+.dataview{
+background-color: #E8E7E8;
+position: absolute;
+top: 85px;
+left: 183px;
+right: 0;
+bottom: 0px;
+overflow: scroll;
+}
+
+
 
