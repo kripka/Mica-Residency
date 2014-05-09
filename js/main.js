@@ -1,13 +1,19 @@
 var renderGraph = function(data){
 
+	console.log(data);
+	
+
+	var graphWidth = 960;
+
+	/******** LINE GRAPH ***************/
 	// line graph svg
 	var lg_svg = d3.select('#line-graph')
 		.append('svg')
-		.attr('width',960)
+		.attr('width',graphWidth)
 		.attr('height',200);
 		
-	// style and measurement variables
-	var lg_padding_left = 60,
+		// style and measurement variables
+		var lg_padding_left = 60,
 		lg_padding_right = 40,
 		lg_padding_top = 40,
 		lg_padding_bottom = 10,
@@ -21,7 +27,6 @@ var renderGraph = function(data){
 		totalQuarters = (Math.ceil(data.data.gpa.length * 10)/10),
 		totalYears = Math.ceil(totalQuarters/4);
 		
-		console.log(totalYears);
 			
 	// line graph group wrapper for transform
 	var lg_g = lg_svg.append('g')
@@ -138,8 +143,44 @@ var renderGraph = function(data){
 				return color.passGreen;
 			}
 		});
+		
+	/******* BLOCK GRAPH *********/
+	
+	
+	var blockGraph = function(data,title,colors) {
+	
+		var bg_div = d3.select('#info')
+			.append('div').attr('class',title.replace(/ /g,'-'));
+			
+		bg_div.append('h2').text(title);
+				
+		var bg_svg = bg_div.append('svg')
+			.attr('width',graphWidth)
+			.attr('height',Object.keys(data).length * 30);
+		
+		var counter = 0;
+		for (var cat in data) {
+			
+			// create a top line
+			bg_svg.append('line')
+				.attr('x1',0)
+				.attr('y1',yScale(i*10))
+				.attr('x2',full_length)
+				.attr('y2',yScale(i*10))
+				.attr('class','indicator-y-line');
+			
+		}
+
+	}
+	
+	blockGraph(data.data.services,"Thread Services");
+	
+	
+		
 
 }
+
+
 
 renderGraph(fakedata());
 

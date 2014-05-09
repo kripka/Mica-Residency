@@ -30,6 +30,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	font-family: Lato,sans-serif;
+	font-weight: 400;
 }
 ol, ul {
 	list-style: none;
@@ -70,4 +72,10 @@ text {
 	font-size: 9px;
 	font-weight: 400;
 }
-		
+
+h2 {
+	background-color:#00AAE7;
+	color: #fff;
+	font-size: 11px;
+	padding: 3px 10px;
+}		
