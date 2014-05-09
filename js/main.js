@@ -3,14 +3,14 @@ var renderGraph = function(data){
 	// line graph svg
 	var lg_svg = d3.select('#line-graph')
 		.append('svg')
-		.attr('width',780)
+		.attr('width',960)
 		.attr('height',200);
 		
 	// style and measurement variables
 	var lg_padding_left = 120,
 		lg_padding_right = 40,
 		lg_padding_top = 40,
-		lg_padding_bottom = 40,
+		lg_padding_bottom = 10,
 		lg_dot_radius = 4,
 		full_length = lg_svg.attr('width') - lg_padding_left - lg_padding_right,
 		full_height = lg_svg.attr('height') - lg_padding_top - lg_padding_bottom,
@@ -19,7 +19,9 @@ var renderGraph = function(data){
 			passGreen: "#BBEABC"
 		},
 		totalQuarters = (Math.ceil(data.data.gpa.length * 10)/10),
-		totalYears = totalQuarters/4;
+		totalYears = Math.ceil(totalQuarters/4);
+		
+		console.log(totalYears);
 			
 	// line graph group wrapper for transform
 	var lg_g = lg_svg.append('g')
@@ -39,7 +41,7 @@ var renderGraph = function(data){
 	
 	//// X axis	function
 	var xScale = d3.scale.linear()
-		.domain([0,data.data.gpa.length])
+		.domain([0,totalYears*4])
 		.range([0,full_length]);
 	
 	
@@ -54,31 +56,29 @@ var renderGraph = function(data){
 		lg_Xgrid = lg_grid.append('g').attr('id','lg-Xgrid'),
 		lg_Ygrid = lg_grid.append('g').attr('id','lg-Ygrid');
 		
-	for (var i = -1; i < (totalQuarters*4) - 4;i++){
+	for (var i = -1; i < totalYears*4;i++){
 		lg_Xgrid.append('line')
-			.attr('x1',xScale((i+1)/4))
+			.attr('x1',xScale((i+1)))
 			.attr('y1',0)
-			.attr('x2',xScale((i+1)/4))
+			.attr('x2',xScale((i+1)))
 			.attr('y2',full_height)
 			.attr('class','quarter-line');	
 	}
 	
-	for (var i = 0; i < data.data.gpa.length -1;i++){
+	for (var i = -1; i < totalYears ;i++){
 		lg_Xgrid.append('line')
-			.attr('x1',xScale(i+1))
+			.attr('x1',xScale((i+1) *4))
 			.attr('y1',-20)
-			.attr('x2',xScale(i+1))
+			.attr('x2',xScale((i+1) *4))
 			.attr('y2',full_height + lg_padding_bottom)
 			.attr('class','year-line');
 	}
-	
 
-	
 	for (var i = 5; i <= 10;i++){
 		lg_Ygrid.append('line')
 			.attr('x1',0)
 			.attr('y1',yScale(i*10))
-			.attr('x2',full_length - xScale(1))
+			.attr('x2',full_length)
 			.attr('y2',yScale(i*10))
 			.attr('class','gpa-line');
 	}
@@ -93,6 +93,19 @@ var renderGraph = function(data){
 	lg_g.append('g')
 		.call(yAxis);
 		
+	// year labels
+		
+	for (var i = 0; i< totalYears; i++){
+		lg_grid.append('text')
+			.attr('x',full_length/totalYears * (i+1) - (full_length/totalYears)/2 -15)
+			.attr('y',-8)
+			.text('Year ' + (i+1));
+	}
+		
+	
+	
+	var lg_graph = lg_g.append('g').attr('id','lg-content')
+		.attr('transform','translate(' + xScale(1)/2 + ',0)');
 		
 	
 	// line generator function
@@ -101,13 +114,13 @@ var renderGraph = function(data){
 	    .y(function(d) { return yScale(d.value); });
 	
 	// gpa path
-	lg_g.append("path")
+	lg_graph.append("path")
 		.datum(data.data.gpa)
 		.attr('d',line)
 		.attr('class','gpa-path');
 	
 	// gpa dots
-	lg_g.selectAll('.dots')
+	lg_graph.selectAll('.dots')
 		.data(data.data.gpa)
 		.enter()
 		.append('circle')
