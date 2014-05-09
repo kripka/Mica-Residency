@@ -1,0 +1,42 @@
+body{
+	
+}
+.logo{
+float: left;
+width: 170px; 
+height: auto
+}
+
+
+.navigation-item{
+margin: 20px
+}
+
+.navigation-item a{
+color: #6A736F;
+text-decoration: none 
+
+}
+
+.navigation-item img{
+display: inline-block;
+vertical-align: middle;
+}
+
+
+.sidebar{
+font-family: verdana;
+font-size: 11px;
+color: #6A736F;
+float: right;
+margin-top: 18px;
+margin-right: 9px;
+}
+
+.sidebar input{
+border: none;
+width: 180px;
+padding: 4px;
+background-color: #E2E1E2;
+}
+

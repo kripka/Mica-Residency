@@ -1,27 +1,55 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
     <head>
+    	<link href="/CSS_thread/thread.css" rel="stylesheet" type="text/css"/>	
+
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		<style>
 			path {
-				stroke:black;
+				stroke:teal;
 				fill: none;
 			}
 		</style>
 
     </head>
     <body>
-		
-		<div id="line-graph"></div>
-		<div id="info"></div>
+    	
+    	<div class="navigationbar">
+    		<img src="/images_thread/thread_logo-01.jpg" class="logo"/>
+    	</div>
+    	
+    	<div class="sidebar">
+    		<span class="navigation-item">
+    			<a class="link" href="#">
+    				<img src="/images_thread/sitethread.png">
+    				 THREAD SITE
+    			</a>
+    		</span>
+    		<span class="navigation-item">
+    			<a class="link" href="#">
+    				<img src="/images_thread/housethread.png">
+    				 THREAD HOUSE
+    			</a>
+    		</span>
+    		<span class="navigation-item">
+    			<a class="link" href="#">
+    				<img src="/images_thread/familythread.png">
+    				 THREAD FAMILY
+    			</a>
+    		</span>
+    		<span class="navigation-item">
+    			<img src="images_thread/studentthread.png" class="icon"/>
+    			<input type="text" placeholder="search by student name"/>
+    		</span>
+
+    	</div>
+    		
+		<div class="dataview">
+			<div id="line-graph"></div>
+			<div id="info"></div>
+		</div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
