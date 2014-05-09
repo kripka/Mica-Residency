@@ -26,7 +26,7 @@ var fakedata = function(){
 	for (var i =0; i<dataPointCount;i++){
 		temp = {};
 		//temp.value =  randomIntFromInterval(gpaLow,gpaHigh);
-		temp.value = ls(noise.simplex2(i/4, 0));
+		temp.value = ls(noise.simplex2(i/8, 0));
 		student.data.gpa.push(temp);
 	}
 	
