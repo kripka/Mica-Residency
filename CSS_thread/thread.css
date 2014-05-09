@@ -59,7 +59,7 @@ overflow: scroll;
 }
 
 .dataview{
-background-color: #E8E7E8;
+/* background-color: #E8E7E8; */
 position: absolute;
 top: 85px;
 left: 183px;
@@ -68,5 +68,10 @@ bottom: 0px;
 overflow: scroll;
 }
 
-
+.studentphoto{
+top: 92px;
+left: 6px;
+width: 85px;
+height: 85px;
+}
 
