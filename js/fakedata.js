@@ -1,6 +1,6 @@
 var fakedata = function(){
 	
-	var dataPointCount = 13,
+	var dataPointCount = 32,
 		gpaHigh = 99,
 		gpaLow = 50;
 		

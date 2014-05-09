@@ -7,7 +7,7 @@ var renderGraph = function(data){
 		.attr('height',200);
 		
 	// style and measurement variables
-	var lg_padding_left = 120,
+	var lg_padding_left = 60,
 		lg_padding_right = 40,
 		lg_padding_top = 40,
 		lg_padding_bottom = 10,
