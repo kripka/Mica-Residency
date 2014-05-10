@@ -13,7 +13,7 @@ var renderGraph = function(data){
 		.attr('height',200);
 		
 		// style and measurement variables
-		var lg_padding_left = 60,
+		var lg_padding_left = 120,
 		lg_padding_right = 40,
 		lg_padding_top = 40,
 		lg_padding_bottom = 10,
@@ -28,7 +28,7 @@ var renderGraph = function(data){
 		totalYears = Math.ceil(totalQuarters/4),
 		line_height = 30,
 		text_padding_right = 10,
-		block_height = 20;
+		block_height = 10;
 		
 			
 	// line graph group wrapper for transform
@@ -150,7 +150,7 @@ var renderGraph = function(data){
 	/******* BLOCK GRAPH *********/
 	
 	
-	var blockGraph = function(data,title,colors) {
+	var blockGraph = function(data,title) {
 	
 		var bg_div = d3.select('#info')
 			.append('div').attr('class',title.replace(/ /g,'-'));
@@ -229,41 +229,43 @@ var renderGraph = function(data){
 			blockGroup = bg_g.append('g').attr('class','block-group')
 				.attr('transform','translate(0,'+yPlacer(counter -1)+')');
 			
-			var maxMinutes = d3.max(data[cat].values,function(d){
-				return d.value;
-			});
-				
-			blockGroup.selectAll('.block').data(data[cat].values).enter()
-				.append('rect')
-				.attr('x',function(d,i){
-					return xScale(i);
-				})
-				.attr('y',(line_height - block_height)/2)
-				.attr('width',full_length/totalQuarters)
-				.attr('height',block_height)
-				.attr('class','block')
-				.style('fill',function(d){
-					if (data[cat].type == 'bin') {
-						var binColors = d3.scale.linear().domain([0,4]).range([d3.rgb(colorScale(counter)),d3.rgb(colorScale(counter)).darker(4)]);
-					
-						if (d.value == 0){
-							return 'transparent';
-						} else {
-							return binColors(d.value);
-						}
 						
-					} else {
-						var minuteColors = d3.scale.linear().domain([0,maxMinutes]).range([d3.rgb(colorScale(counter)),d3.rgb(colorScale(counter)).darker(4)]);
-						
-						if (d.value == 0) {
-							return 'transparent'
-						} else {
-							return minuteColors(d.value);
-						}
-
-					}
+			
+			
+				var maxCounts = d3.max(data[cat].values,function(d){
+					return d.value;
 				});
 				
+				blockGroup.selectAll('.block').data(data[cat].values).enter()
+					.append('rect')
+					.attr('x',function(d,i){
+						return xScale(i);
+					})
+					.attr('y',(line_height - block_height)/2)
+					.attr('width',full_length/totalQuarters)
+					.attr('height',block_height)
+					.attr('class','block')
+					.style('fill',function(d){
+						if (data[cat].type == 'bin') {
+							var binColors = d3.scale.linear().domain([0,4]).range([d3.rgb(colorScale(counter)).brighter(1),d3.rgb(colorScale(counter)).darker(4)]);
+						
+							if (d.value == 0){
+								return 'transparent';
+							} else {
+								return binColors(d.value);
+							}
+							
+						} else {
+							var countColors = d3.scale.linear().domain([0,maxCounts]).range([d3.rgb(colorScale(counter)).brighter(1),d3.rgb(colorScale(counter)).darker(4)]);
+							
+							if (d.value == 0) {
+								return 'transparent'
+							} else {
+								return countColors(d.value);
+							}
+	
+						}
+					});
 
 
 			
@@ -279,8 +281,22 @@ var renderGraph = function(data){
 	}
 	
 	blockGraph(data.data.services,"Thread Services");
+	blockGraph(data.data.absenteeism,"Absenteeism");
 	
 	
+	var gradeGraph = function(data,title) {
+		
+		var bg_div = d3.select('#info')
+			.append('div').attr('class',title.replace(/ /g,'-'));
+			
+		bg_div.append('h2').text(title);
+				
+		var bg_svg = bg_div.append('svg')
+			.attr('width',graphWidth)
+			.attr('height',Object.keys(data).length * line_height);
+	};
+	
+	gradeGraph();
 		
 
 }
