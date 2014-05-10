@@ -33,22 +33,29 @@ var fakedata = function(){
 	];
 	
 	var classes=[],
-		temp;
+		temp,temp2;
 	
 	for (var i = 0; i<classCategories.length;i++){
 	
-		for (var x = 0; x<dataPointCount;x++){
+		for (var x = 0; x<Math.ceil(dataPointCount/4);x++){
 			temp = {};
-			temp.name = classCategories[i].holder;
+			temp.course = classCategories[i].holder;
+			temp.name = classCategories[i].title;
 			temp.category = classCategories[i].cat;
-			temp.grades = {};
+			temp.grades = [];
 			
+			for (var z = 0; z<4; z++){
+				temp2={};
+				temp2.year = x +1;
+				temp2.quarter = z+1;
+				temp2.grade = randomIntFromInterval(50,100);
+				temp.grades.push(temp2);
+			}
 			
 			classes.push(temp);
 		}
 	}
 	
-	console.log(classes);
 		
 	var ls = d3.scale.linear()
 		.domain([-1,1])
@@ -64,6 +71,8 @@ var fakedata = function(){
 		} 
 		
 	}
+	
+	student.data.classes= classes;
 	
 	var temp;
 	

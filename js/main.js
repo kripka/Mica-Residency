@@ -236,6 +236,8 @@ var renderGraph = function(data){
 					return d.value;
 				});
 				
+				var countColors = d3.scale.linear().domain([0,maxCounts]).range(['white',colorScale(counter)]);
+				
 				blockGroup.selectAll('.block').data(data[cat].values).enter()
 					.append('rect')
 					.attr('x',function(d,i){
@@ -246,25 +248,7 @@ var renderGraph = function(data){
 					.attr('height',block_height)
 					.attr('class','block')
 					.style('fill',function(d){
-						if (data[cat].type == 'bin') {
-							var binColors = d3.scale.linear().domain([0,4]).range([d3.rgb(colorScale(counter)).brighter(1),d3.rgb(colorScale(counter)).darker(4)]);
-						
-							if (d.value == 0){
-								return 'transparent';
-							} else {
-								return binColors(d.value);
-							}
-							
-						} else {
-							var countColors = d3.scale.linear().domain([0,maxCounts]).range([d3.rgb(colorScale(counter)).brighter(1),d3.rgb(colorScale(counter)).darker(4)]);
-							
-							if (d.value == 0) {
-								return 'transparent'
-							} else {
-								return countColors(d.value);
-							}
-	
-						}
+						return countColors(d.value);
 					});
 
 
@@ -285,6 +269,26 @@ var renderGraph = function(data){
 	
 	
 	var gradeGraph = function(data,title) {
+	
+		var categories = [];
+		
+		for (var subject in data){
+			categories.push(data[subject].name);
+		}
+		var arrayUnique = function(a) {
+		    return a.reduce(function(p, c) {
+		        if (p.indexOf(c) < 0) p.push(c);
+		        return p;
+		    }, []);
+		};
+		
+		var cats = arrayUnique(categories);
+		categories = [];
+		
+		for (var subject in data){
+			categories.push(data[subject].category);
+		}
+		var catsClean = arrayUnique(categories);
 		
 		var bg_div = d3.select('#info')
 			.append('div').attr('class',title.replace(/ /g,'-'));
@@ -293,10 +297,123 @@ var renderGraph = function(data){
 				
 		var bg_svg = bg_div.append('svg')
 			.attr('width',graphWidth)
-			.attr('height',Object.keys(data).length * line_height);
-	};
+			.attr('height', cats.length * line_height);
+			
+		var bg_g = bg_svg.append('g').attr('id',title.replace(/ /g,'-')+'-g')
+			.attr('transform','translate('+ lg_padding_left + ',0)');
+			
+		var bg_grid = bg_g.append('g').attr('class','bg-grid'),
+			bg_Xgrid = bg_g.append('g').attr('class','bg-Xgrid'),
+			bg_Ygrid = bg_g.append('g').attr('class','bg-Ygrid');
+			
+		var counter = 0,
+			bgroup,
+			yPlacer = function(counter){
+				return counter*line_height + line_height;
+			},
+			colorScale=d3.scale.category10(),
+			blockGroup;
+		
+		// set up the rows, key by category id for ind. classes	
+		for (var c = 0; c<cats.length;c++) {
+			
+			bgroup = bg_g.append('g').attr('id',catsClean[c])
+				.attr('transform','translate(0,'+ c * line_height +')');
+			
+			
+			// create a top line
+			bgroup.append('line')
+				.attr('x1',0)
+				.attr('y1',yPlacer(c))
+				.attr('x2',full_length)
+				.attr('y2',yPlacer(c))
+				.attr('class','indicator-y-line');
+			
+			
+			//label
+			bgroup.append('text')
+				.text(cats[c])
+				.attr('x',0 - text_padding_right)
+				.attr('y',line_height/2 +3)
+				.style('text-anchor','end');
+				
+			/// grid lines	
+			for (var i = -1; i < totalYears*4;i++){
+				bg_Xgrid.append('line')
+					.attr('x1',xScale((i+1)))
+					.attr('y1',0)
+					.attr('x2',xScale((i+1)))
+					.attr('y2',full_height)
+					.attr('class','quarter-line');	
+			}
+			
+			for (var i = -1; i < totalYears ;i++){
+				bg_Xgrid.append('line')
+					.attr('x1',xScale((i+1) *4))
+					.attr('y1',0)
+					.attr('x2',xScale((i+1) *4))
+					.attr('y2',full_height + lg_padding_bottom)
+					.attr('class','year-line');
+			}
+		
+			for (var i = 5; i <= 10;i++){
+				bg_Ygrid.append('line')
+					.attr('x1',0)
+					.attr('y1',yScale(i*10))
+					.attr('x2',full_length)
+					.attr('y2',yScale(i*10))
+					.attr('class','gpa-line');
+			}
+
+		} // for c
+		
+		var categorySort = {},
+			temp;
+		
+		for (var c in catsClean){
+			categorySort[catsClean[c]]= [];
+		}
+				
+		for (var c in data) {
+			for (var x =  0;x<data[c].grades.length;x++){
+				categorySort[data[c].category].push(data[c].grades[x]);
+			}
 	
-	gradeGraph();
+		}
+		
+		var passColors = d3.scale.linear().domain([65,100]).range([color.passGreen,d3.rgb(color.passGreen).darker(1)]);
+		
+		var place;
+		// go thru each class
+		for (var c in categorySort) {
+			place = d3.select('#'+c);
+			
+			place.selectAll('.block').data(categorySort[c]).enter()
+				.append('rect')
+				.attr('x',function(d,i){
+					return xScale( ((d.year-1))*4 + d.quarter-1) ;
+				})
+				.attr('y',(line_height - block_height)/2)
+				.attr('width',full_length/totalQuarters)
+				.attr('height',block_height)
+				.attr('class',function(d){
+					return 'block year-'+d.year+' quarter-'+d.quarter + ' '+c;
+				})
+				.style('fill',function(d){
+					if (d.grade < 65) {
+						return color.failRed;
+					} else {
+						return passColors(d.grade);
+					}
+				});
+			
+		}
+		
+			
+			
+	}; // end gradeGraph
+	
+	gradeGraph(data.data.classes,"Individual Class Grades");
 		
 
 }
