@@ -7,16 +7,18 @@ var fakedata = function(){
 		
 	// services variables
 	var services = [
+		{ name :"tutoring","type" : "counts","low":0,"high":460, "title":"Tutoring"},
+		{ name :"community","type" : "counts","low":0,"high":45, "title":"Community Service"},
+		{ name :"enrichment","type" : "counts","low":0,"high":650, "title":"Enrichment"},
+		{ name :"life","type" : "counts","low":0,"high":650, "title":"Life Skills"},
+		{ name :"liasoning","type" : "counts","low":0,"high":67, "title":"Teacher Liasoning"},
+		{ name :"rides","type" : "counts","low":0,"high":120, "title":"Rides To School"},
+		{ name :"visits","type" : "counts","low":0,"high":780, "title":"House Visits"},
 		{ name :"food","type" : "bin", "title": "Food"},
 		{ name :"clothing","type" : "bin", "title":"Clothing"},
-		{ name :"rides","type" : "counts","low":0,"high":120, "title":"Rides To School"},
 		{ name :"health","type" : "counts","low":0,"high":78, "title":"Health"},
 		{ name :"legal","type" : "counts","low":0,"high":45, "title":"Legal"},
-		{ name :"tutoring","type" : "counts","low":0,"high":460, "title":"Tutoring"},
-		{ name :"liasoning","type" : "counts","low":0,"high":67, "title":"Teacher Liasoning"},
-		{ name :"visits","type" : "counts","low":0,"high":780, "title":"House Visits"},
-		{ name :"life","type" : "counts","low":0,"high":650, "title":"Life Skills"},
-		{ name :"community","type" : "counts","low":0,"high":45, "title":"Community Service"},
+		{ name :"counseling","type" : "counts","low":0,"high":45, "title":"Counseling"},
 	];
 	
 	// absenteeism

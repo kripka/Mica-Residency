@@ -3,7 +3,9 @@ var renderGraph = function(data){
 	console.log(data);
 	
 
-	var graphWidth = 960;
+	var graphWidth = parseInt(d3.select('.dataview').style('width'));
+	
+	console.log(graphWidth);
 
 	/******** LINE GRAPH ***************/
 	// line graph svg
@@ -22,7 +24,20 @@ var renderGraph = function(data){
 		full_height = lg_svg.attr('height') - lg_padding_top - lg_padding_bottom,
 		color = {
 			failRed: "#E3B4B8",
-			passGreen: "#BBEABC"
+			passGreen: "#BBEABC",
+			tutoring: "#1988A0",
+			community: "#1988A0",
+			enrichment: "#1988A0",
+			life: "#1988A0",
+			liasoning: "#1988A0",
+			rides: "#FFD135",
+			visits: "#FFD135",
+			food: "#9E9B9C",
+			clothing: "#9E9B9C",
+			health: "#9E9B9C",
+			legal: "#E51633",
+			counseling: "#E51633",
+			absent: "#E51633"
 		},
 		totalQuarters = (Math.ceil(data.data.gpa.length * 10)/10),
 		totalYears = Math.ceil(totalQuarters/4),
@@ -169,7 +184,6 @@ var renderGraph = function(data){
 			yPlacer = function(counter){
 				return counter*line_height + line_height;
 			},
-			colorScale=d3.scale.category10(),
 			blockGroup;
 			
 		var bg_grid = bg_g.append('g').attr('class','bg-grid'),
@@ -236,7 +250,7 @@ var renderGraph = function(data){
 					return d.value;
 				});
 				
-				var countColors = d3.scale.linear().domain([0,maxCounts]).range(['white',colorScale(counter)]);
+				var countColors = d3.scale.linear().domain([0,maxCounts]).range(['white',color[cat]]);
 				
 				blockGroup.selectAll('.block').data(data[cat].values).enter()
 					.append('rect')
