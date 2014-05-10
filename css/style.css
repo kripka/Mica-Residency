@@ -102,3 +102,19 @@ h2 {
 #info .hitzones {
 	top:200px;
 }
+
+#head {
+	position: absolute;
+	top:-50px;
+}
+
+#head img {
+	width: 60px;
+	height: 60px;
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	border-radius: 50%;
+	border: 1px solid #fff;
+
+}

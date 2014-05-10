@@ -439,23 +439,32 @@ var renderGraph = function(data){
 	
 	gradeGraph(data.data.classes,"Individual Class Grades");
 	
-	
-	var renderFloatingHead = function(imagePath){
-			var head_div = d3.select('.dataview').append('div')
-				.attr('id','head');
+	var head_div;
+	var renderFloatingHead = function(){
+			head_div = d3.select('.dataview').append('div')
+				.attr('id','head')
+				//.style('left',(quarter * xScale(1) + lg_padding_left - 26) + "px").style('opacity',0);
+				.style('left',lg_padding_left).style('opacity',0);
 				
 			var head_svg = head_div.append('svg')
-				.attr('width',"165px")
-				.attr('height',"185px");
+				.attr('width',"85px")
+				.attr('height',"94px");
 				
 			head_svg.append('path')
 				.attr('d',"M41.245,0c22.778,0,41.909,18.512,41.243,41.325 c-0.904,30.954-36.947,50.328-41.453,50.173C35.25,91.357,0.269,72.272,0.001,41.325C-0.196,18.503,18.466,0,41.245,0z")
 				.style('fill',color.head_bg);
 				
 			var head_img = head_div.append('img')
-				.attr('src',imagePath);
+				.attr('src',"/images_thread/photodiquann1.png");
 	};
+	renderFloatingHead();
 	
+	var moveFloatingHead = function(quarter){
+		
+		var left = (quarter * xScale(1) + lg_padding_left - 25) + "px";
+		head_div.transition().style('left',left).duration(200).style('opacity',1);
+			
+	};
 	
 	
 	var renderHitZones = function(div,data){
@@ -504,13 +513,18 @@ var renderGraph = function(data){
 				var quarter = d3.select(this).attr("data-quarter");
 								
 				offElements = d3.selectAll('rect:not(.quarter-' +quarter +'),circle:not(.quarter-'+quarter+'),#lg-content path' ).transition().style('opacity',.25);
+				moveFloatingHead(quarter);
 				
 				
 			});
 			
 			hit.on('mouseleave',function(){
 				d3.selectAll('rect,circle,#lg-content path').transition().style('opacity',1);
+				
+				head_div.transition().style('opacity',0);
 			});
+			
+
 				
 		}
 		
