@@ -58,6 +58,46 @@ bottom: 0px;
 overflow: scroll;
 }
 
+.student-name{
+	font-size:18px;
+	color: #FFFFFF;
+	padding-left: 5px;
+	font-weight: bold;
+}
+
+.student-house{
+	font-size: 13px;
+	color: #E8E7E8;
+	padding-left: 5px;
+	padding-top: 3px;
+}
+
+.dashboarditems{
+	margin-top: 80px
+}
+
+.dashboarditems li{
+	font-size: 12px;
+	padding: 7px;
+	margin: 4px;
+	color: #6A736F;
+	background-color: #E8E7E8
+}
+
+.volunteers li{
+	font-size: 12px;
+	padding: 2px;
+	margin: 4px;
+	color: #6A736F;
+	background-color: #E8E7E8
+}
+
+.volunteericon{
+	padding: 2px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .dataview{
 /* background-color: #E8E7E8; */
 position: absolute;
@@ -68,10 +108,16 @@ bottom: 0px;
 overflow: scroll;
 }
 
+.extras{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width:180px;
+}
 .studentphoto{
-top: 92px;
-left: 6px;
-width: 85px;
-height: 85px;
+	top: 92px;
+	left: 10px;
+	width: 85px;
+	height: 85px;
+	padding: 5px;
 }
 
