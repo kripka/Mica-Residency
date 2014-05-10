@@ -82,4 +82,19 @@ h2 {
 	color: #fff;
 	font-size: 11px;
 	padding: 3px 10px;
-}		
+}	
+
+#line-graph svg {
+	position: absolute;
+	top:0;
+	left:0;
+}	
+
+#info {
+	position: relative!important;
+}
+
+#info .rule {
+	height:100%!important;
+	margin-top:0!important;
+}

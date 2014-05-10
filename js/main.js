@@ -160,6 +160,9 @@ var renderGraph = function(data){
 			} else {
 				return color.passGreen;
 			}
+		})
+		.attr('class',function(d,i){
+			return 'dots quarter-' + i;
 		});
 		
 	/******* BLOCK GRAPH *********/
@@ -260,9 +263,14 @@ var renderGraph = function(data){
 					.attr('y',(line_height - block_height)/2)
 					.attr('width',full_length/totalQuarters)
 					.attr('height',block_height)
-					.attr('class','block')
+					.attr('class',function(d,i){
+						return 'block quarter-'+i;
+					})
 					.style('fill',function(d){
 						return countColors(d.value);
+					})
+					.attr('data-quarter',function(d,i){
+						return i;
 					});
 
 
@@ -410,8 +418,8 @@ var renderGraph = function(data){
 				.attr('y',(line_height - block_height)/2)
 				.attr('width',full_length/totalQuarters)
 				.attr('height',block_height)
-				.attr('class',function(d){
-					return 'block year-'+d.year+' quarter-'+d.quarter + ' '+c;
+				.attr('class',function(d,i){
+					return 'block year-'+d.year+' quarter-'+i + ' '+c;
 				})
 				.style('fill',function(d){
 					if (d.grade < 65) {
@@ -419,6 +427,9 @@ var renderGraph = function(data){
 					} else {
 						return passColors(d.grade);
 					}
+				})
+				.attr('data-quarter',function(d,i){
+					return i;
 				});
 			
 		}
@@ -428,6 +439,56 @@ var renderGraph = function(data){
 	}; // end gradeGraph
 	
 	gradeGraph(data.data.classes,"Individual Class Grades");
+	
+	
+	var renderHitZones = function(div,data){
+	
+		
+		var data_div = d3.select(div).append('div').attr('id','hitzones')
+			.style({
+				height: d3.select(div).style('height'),
+				width: full_length + "px",
+				display:"block",
+				position: "absolute",
+				"margin-left": lg_padding_left + "px",
+				top:0,
+				left:0
+			});
+		
+		var hit;
+		
+		for (var i = 0; i<data.length;i++){
+			hit = data_div.append('div')
+				.style({
+					display:"block",
+					"float": "left",
+					width: xScale(1) + "px",
+					height: parseInt(data_div.style('height')) - lg_padding_top  + "px",
+					"margin-top":lg_padding_top + "px"
+				})
+				.attr('class',"rule quarter-" + i)
+				.attr('data-quarter',i);
+				
+			hit.on('mouseenter',function(){
+			
+				var quarter = d3.select(this).attr("data-quarter");
+								
+				offElements = d3.selectAll('rect:not(.quarter-' +quarter +'),circle:not(.quarter-'+quarter+'),#lg-content path' ).transition().style('opacity',.1);
+				
+				
+			});
+			
+			hit.on('mouseleave',function(){
+				d3.selectAll('rect,circle,#lg-content path').transition().style('opacity',1);
+			});
+				
+		}
+		
+			
+	};
+	
+	renderHitZones("#line-graph",data.data.gpa);
+	renderHitZones("#info",data.data.gpa);
 		
 
 }
