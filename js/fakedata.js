@@ -7,8 +7,8 @@ var fakedata = function(){
 		
 	// services variables
 	var services = [
-		{ name :"food","type" : "bin"},
-		{ name :"legal","type" : "minutes","low":0,"high":45}
+		{ name :"food","type" : "bin", "title": "Food"},
+		{ name :"legal","type" : "minutes","low":0,"high":45, "title":"Legal"}
 	];
 		
 	var ls = d3.scale.linear()
@@ -30,7 +30,10 @@ var fakedata = function(){
 	
 	// add services to object
 	for (var x = 0; x<services.length;x++){
-		student.data.services[services[x].name] = [];
+		student.data.services[services[x].name] = {};
+		student.data.services[services[x].name].values = [];
+		student.data.services[services[x].name].type = services[x].type;
+		student.data.services[services[x].name].title = services[x].title;
 	}
 		
 	
@@ -57,7 +60,7 @@ var fakedata = function(){
 			} else if (services[x].type == "minutes"){
 				temp.value = randomIntFromInterval(services[x].low,services[x].high);
 			}
-			student.data.services[services[x].name].push(temp);
+			student.data.services[services[x].name].values.push(temp);
 		}
 		
 	}

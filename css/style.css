@@ -49,6 +49,10 @@ table {
 	border-spacing: 0;
 }
 
+svg * {
+	shape-rendering: auto;
+}
+
 path,line {
 	stroke:#444;
 	fill: none;

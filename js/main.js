@@ -25,7 +25,10 @@ var renderGraph = function(data){
 			passGreen: "#BBEABC"
 		},
 		totalQuarters = (Math.ceil(data.data.gpa.length * 10)/10),
-		totalYears = Math.ceil(totalQuarters/4);
+		totalYears = Math.ceil(totalQuarters/4),
+		line_height = 30,
+		text_padding_right = 10,
+		block_height = 20;
 		
 			
 	// line graph group wrapper for transform
@@ -156,20 +159,122 @@ var renderGraph = function(data){
 				
 		var bg_svg = bg_div.append('svg')
 			.attr('width',graphWidth)
-			.attr('height',Object.keys(data).length * 30);
+			.attr('height',Object.keys(data).length * line_height);
+			
+		var bg_g = bg_svg.append('g').attr('id',title.replace(/ /g,'-')+'-g')
+			.attr('transform','translate('+ lg_padding_left + ',0)');
 		
-		var counter = 0;
+		var counter = 0,
+			bgroup,
+			yPlacer = function(counter){
+				return counter*line_height + line_height;
+			},
+			colorScale=d3.scale.category10(),
+			blockGroup;
+			
+		var bg_grid = bg_g.append('g').attr('class','bg-grid'),
+			bg_Xgrid = bg_g.append('g').attr('class','bg-Xgrid'),
+			bg_Ygrid = bg_g.append('g').attr('class','bg-Ygrid');
+			
 		for (var cat in data) {
+		
+			bgroup = bg_g.append('g').attr('id',cat);
+			
 			
 			// create a top line
-			bg_svg.append('line')
+			bgroup.append('line')
 				.attr('x1',0)
-				.attr('y1',yScale(i*10))
+				.attr('y1',yPlacer(counter))
 				.attr('x2',full_length)
-				.attr('y2',yScale(i*10))
+				.attr('y2',yPlacer(counter))
 				.attr('class','indicator-y-line');
 			
-		}
+			
+			//label
+			bgroup.append('text')
+				.text(data[cat].title)
+				.attr('x',0 - text_padding_right)
+				.attr('y',yPlacer(counter) - line_height/2 +3)
+				.style('text-anchor','end');
+				
+			/// grid lines	
+			for (var i = -1; i < totalYears*4;i++){
+				bg_Xgrid.append('line')
+					.attr('x1',xScale((i+1)))
+					.attr('y1',0)
+					.attr('x2',xScale((i+1)))
+					.attr('y2',full_height)
+					.attr('class','quarter-line');	
+			}
+			
+			for (var i = -1; i < totalYears ;i++){
+				bg_Xgrid.append('line')
+					.attr('x1',xScale((i+1) *4))
+					.attr('y1',0)
+					.attr('x2',xScale((i+1) *4))
+					.attr('y2',full_height + lg_padding_bottom)
+					.attr('class','year-line');
+			}
+		
+			for (var i = 5; i <= 10;i++){
+				bg_Ygrid.append('line')
+					.attr('x1',0)
+					.attr('y1',yScale(i*10))
+					.attr('x2',full_length)
+					.attr('y2',yScale(i*10))
+					.attr('class','gpa-line');
+			}
+			
+			// blocks
+			blockGroup = bg_g.append('g').attr('class','block-group')
+				.attr('transform','translate(0,'+yPlacer(counter -1)+')');
+			
+			var maxMinutes = d3.max(data[cat].values,function(d){
+				return d.value;
+			});
+				
+			blockGroup.selectAll('.block').data(data[cat].values).enter()
+				.append('rect')
+				.attr('x',function(d,i){
+					return xScale(i);
+				})
+				.attr('y',(line_height - block_height)/2)
+				.attr('width',full_length/totalQuarters)
+				.attr('height',block_height)
+				.attr('class','block')
+				.style('fill',function(d){
+					if (data[cat].type == 'bin') {
+						var binColors = d3.scale.linear().domain([0,4]).range([d3.rgb(colorScale(counter)),d3.rgb(colorScale(counter)).darker(4)]);
+					
+						if (d.value == 0){
+							return 'transparent';
+						} else {
+							return binColors(d.value);
+						}
+						
+					} else {
+						var minuteColors = d3.scale.linear().domain([0,maxMinutes]).range([d3.rgb(colorScale(counter)),d3.rgb(colorScale(counter)).darker(4)]);
+						
+						if (d.value == 0) {
+							return 'transparent'
+						} else {
+							return minuteColors(d.value);
+						}
+
+					}
+				});
+				
+
+
+			
+			
+			// increment counter
+			counter++;
+			
+		} // end for in 
+		
+		// set svg height
+		bg_svg.attr('height',line_height * counter)
 
 	}
 	
