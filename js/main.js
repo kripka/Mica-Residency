@@ -165,6 +165,7 @@ var renderGraph = function(data){
 		
 	/******* BLOCK GRAPH *********/
 	
+	var blockGraphHeights = 0;
 	
 	var blockGraph = function(data,title) {
 	
@@ -281,7 +282,8 @@ var renderGraph = function(data){
 		} // end for in 
 		
 		// set svg height
-		bg_svg.attr('height',line_height * counter)
+		bg_svg.attr('height',line_height * counter);
+		blockGraphHeights += line_height * counter;
 
 	}
 	
@@ -319,6 +321,8 @@ var renderGraph = function(data){
 		var bg_svg = bg_div.append('svg')
 			.attr('width',graphWidth)
 			.attr('height', cats.length * line_height);
+			
+		blockGraphHeights += cats.length * line_height;
 			
 		var bg_g = bg_svg.append('g').attr('id',title.replace(/ /g,'-')+'-g')
 			.attr('transform','translate('+ lg_padding_left + ',0)');
@@ -455,7 +459,8 @@ var renderGraph = function(data){
 				.style('fill',color.head_bg);
 				
 			var head_img = head_div.append('img')
-				.attr('src',"/images_thread/photodiquann1.png");
+				.attr('src',"/images_thread/trans.gif")
+				.attr('data-year', 'null');
 	};
 	renderFloatingHead();
 	
@@ -463,6 +468,24 @@ var renderGraph = function(data){
 		
 		var left = (quarter * xScale(1) + lg_padding_left - 25) + "px";
 		head_div.transition().style('left',left).duration(200).style('opacity',1);
+		
+		// check if there is a new image
+		var year = (quarter%4 == 0) ? quarter/4 +1 : Math.ceil(quarter/4);
+		
+		var img = head_div.select('img'),
+			shownYear = img.attr('data-year');
+			
+		if (shownYear != year) {
+			img.transition().style('opacity',0);
+			
+			var newImg = head_div.append('img')
+				.attr('src',data.images[year-1].path)
+				.style('opacity',0).transition().duration(1000)
+				.style('opacity',1);
+			
+			
+		}
+		
 			
 	};
 	
@@ -480,19 +503,9 @@ var renderGraph = function(data){
 				left:0
 			});
 			
-		/*
-	if (div == '#info') {
-				var idivheight = 0;
-				var idivs = d3.selectAll('.blockgraph').each(function(){
-					console.log(d3.select(this));
-					idivheight += parseInt(d3.select(this).style('width'));
-				});
-				
-				console.log(idivheight);
-				 
-				data_div.style("height", idivheight + 'px' );
+			if (div == '#info') {				 
+				data_div.style("height", blockGraphHeights + 90 + 'px' );
 			}
-*/
 		
 		var hit;
 		
@@ -533,6 +546,7 @@ var renderGraph = function(data){
 	
 	renderHitZones("#line-graph",data.data.gpa);
 	renderHitZones("#info",data.data.gpa);
+	
 		
 
 }
