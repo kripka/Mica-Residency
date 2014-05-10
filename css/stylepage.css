@@ -98,7 +98,7 @@ overflow: scroll;
 }
 
 .dataview{
-background-color: #E8E7E8;
+/* background-color: #E8E7E8; */
 position: absolute;
 top: 95px;
 left: 186px;
@@ -107,6 +107,7 @@ right: 0;
 bottom: 0px;
 overflow: scroll;
 }
+
 
 .dataviewwhite{
 background-color: #FFFFFF;
@@ -158,3 +159,4 @@ right: 0;
 bottom: 0px;
 overflow: scroll;
 }
+

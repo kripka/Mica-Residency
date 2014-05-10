@@ -1,12 +1,8 @@
 var renderGraph = function(data){
-
-	console.log(data);
 	
 
 	var graphWidth = parseInt(d3.select('.dataview').style('width'));
 	
-	console.log(graphWidth);
-
 	/******** LINE GRAPH ***************/
 	// line graph svg
 	var lg_svg = d3.select('#line-graph')
@@ -23,8 +19,8 @@ var renderGraph = function(data){
 		full_length = lg_svg.attr('width') - lg_padding_left - lg_padding_right,
 		full_height = lg_svg.attr('height') - lg_padding_top - lg_padding_bottom,
 		color = {
-			failRed: "#E3B4B8",
-			passGreen: "#BBEABC",
+			failRed: "#be5b5b",
+			passGreen: "#6c9c5c",
 			tutoring: "#1988A0",
 			community: "#1988A0",
 			enrichment: "#1988A0",
@@ -134,7 +130,8 @@ var renderGraph = function(data){
 	// line generator function
 	var line = d3.svg.line()
 	    .x(function(d,i) { return xScale(i); })
-	    .y(function(d) { return yScale(d.value); });
+	    .y(function(d) { return yScale(d.value); })
+	    .interpolate('monotone');
 	
 	// gpa path
 	lg_graph.append("path")
@@ -170,8 +167,9 @@ var renderGraph = function(data){
 	
 	var blockGraph = function(data,title) {
 	
+			
 		var bg_div = d3.select('#info')
-			.append('div').attr('class',title.replace(/ /g,'-'));
+			.append('div').attr('class',title.replace(/ /g,'-') + ' blockgraph');
 			
 		bg_div.append('h2').text(title);
 				
@@ -220,7 +218,7 @@ var renderGraph = function(data){
 					.attr('x1',xScale((i+1)))
 					.attr('y1',0)
 					.attr('x2',xScale((i+1)))
-					.attr('y2',full_height)
+					.attr('y2',Object.keys(data).length*line_height)
 					.attr('class','quarter-line');	
 			}
 			
@@ -229,7 +227,7 @@ var renderGraph = function(data){
 					.attr('x1',xScale((i+1) *4))
 					.attr('y1',0)
 					.attr('x2',xScale((i+1) *4))
-					.attr('y2',full_height + lg_padding_bottom)
+					.attr('y2',Object.keys(data).length*line_height + lg_padding_bottom)
 					.attr('class','year-line');
 			}
 		
@@ -313,7 +311,7 @@ var renderGraph = function(data){
 		var catsClean = arrayUnique(categories);
 		
 		var bg_div = d3.select('#info')
-			.append('div').attr('class',title.replace(/ /g,'-'));
+			.append('div').attr('class',title.replace(/ /g,'-') + ' blockgraph');
 			
 		bg_div.append('h2').text(title);
 				
@@ -403,7 +401,7 @@ var renderGraph = function(data){
 	
 		}
 		
-		var passColors = d3.scale.linear().domain([65,100]).range([color.passGreen,d3.rgb(color.passGreen).darker(1)]);
+		var passColors = d3.scale.linear().domain([65,100]).range([d3.rgb(color.passGreen).brighter(1),d3.rgb(color.passGreen).darker(1)]);
 		
 		var place;
 		// go thru each class
@@ -441,10 +439,14 @@ var renderGraph = function(data){
 	gradeGraph(data.data.classes,"Individual Class Grades");
 	
 	
-	var renderHitZones = function(div,data){
+	var renderFloatingHead = function(){
+			
+	};
 	
-		
-		var data_div = d3.select(div).append('div').attr('id','hitzones')
+	
+	var renderHitZones = function(div,data){
+			
+		var data_div = d3.select(div).append('div').attr('class','hitzones')
 			.style({
 				height: d3.select(div).style('height'),
 				width: full_length + "px",
@@ -454,6 +456,20 @@ var renderGraph = function(data){
 				top:0,
 				left:0
 			});
+			
+		/*
+	if (div == '#info') {
+				var idivheight = 0;
+				var idivs = d3.selectAll('.blockgraph').each(function(){
+					console.log(d3.select(this));
+					idivheight += parseInt(d3.select(this).style('width'));
+				});
+				
+				console.log(idivheight);
+				 
+				data_div.style("height", idivheight + 'px' );
+			}
+*/
 		
 		var hit;
 		
@@ -473,7 +489,7 @@ var renderGraph = function(data){
 			
 				var quarter = d3.select(this).attr("data-quarter");
 								
-				offElements = d3.selectAll('rect:not(.quarter-' +quarter +'),circle:not(.quarter-'+quarter+'),#lg-content path' ).transition().style('opacity',.1);
+				offElements = d3.selectAll('rect:not(.quarter-' +quarter +'),circle:not(.quarter-'+quarter+'),#lg-content path' ).transition().style('opacity',.25);
 				
 				
 			});
