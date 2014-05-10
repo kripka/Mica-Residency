@@ -33,7 +33,8 @@ var renderGraph = function(data){
 			health: "#9E9B9C",
 			legal: "#E51633",
 			counseling: "#F2921E",
-			absent: "#DD521E"
+			absent: "#DD521E",
+			head_bg: "#1988A0"
 		},
 		totalQuarters = (Math.ceil(data.data.gpa.length * 10)/10),
 		totalYears = Math.ceil(totalQuarters/4),
@@ -439,9 +440,22 @@ var renderGraph = function(data){
 	gradeGraph(data.data.classes,"Individual Class Grades");
 	
 	
-	var renderFloatingHead = function(){
-			
+	var renderFloatingHead = function(imagePath){
+			var head_div = d3.select('.dataview').append('div')
+				.attr('id','head');
+				
+			var head_svg = head_div.append('svg')
+				.attr('width',"165px")
+				.attr('height',"185px");
+				
+			head_svg.append('path')
+				.attr('d',"M41.245,0c22.778,0,41.909,18.512,41.243,41.325 c-0.904,30.954-36.947,50.328-41.453,50.173C35.25,91.357,0.269,72.272,0.001,41.325C-0.196,18.503,18.466,0,41.245,0z")
+				.style('fill',color.head_bg);
+				
+			var head_img = head_div.append('img')
+				.attr('src',imagePath);
 	};
+	
 	
 	
 	var renderHitZones = function(div,data){
