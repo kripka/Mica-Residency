@@ -16,7 +16,6 @@ height: 85px;
 }
 
 
-
 .navigation-item{
 margin: 20px
 }
@@ -24,14 +23,12 @@ margin: 20px
 .navigation-item a{
 color: #6A736F;
 text-decoration: none 
-
 }
 
 .navigation-item img{
 display: inline-block;
 vertical-align: middle;
 }
-
 
 .navigationbar{
 font-size: 11px;
@@ -45,6 +42,7 @@ margin-right: 9px;
 border: none;
 width: 180px;
 padding: 4px;
+border-radius: 4px;
 background-color: #E2E1E2;
 }
 
@@ -55,6 +53,7 @@ top: 85px;
 left: 3px;
 width: 180px;
 bottom: 0px;
+border-radius: 4px;
 overflow: scroll;
 }
 
@@ -99,14 +98,27 @@ overflow: scroll;
 }
 
 .dataview{
-/* background-color: #E8E7E8; */
+background-color: #E8E7E8;
 position: absolute;
 top: 85px;
-left: 183px;
+left: 186px;
+border-radius: 4px;
 right: 0;
 bottom: 0px;
 overflow: scroll;
 }
+
+.dataviewwhite{
+background-color: #FFFFFF;
+position: absolute;
+top: 4px;
+left: 4px;
+border-radius: 4px;
+right: 0;
+bottom: 0px;
+overflow: scroll;
+}
+
 
 .extras{
 	margin-top: 20px;
@@ -114,10 +126,13 @@ overflow: scroll;
 	width:180px;
 }
 .studentphoto{
-	left: 10px;
+	margin-top: 3px;
+	margin-left: 3px;
 	width: 85px;
 	height: 85px;
-	padding: 5px;
+	/*padding: 5px;*/
+	overflow: hidden;
+	border-radius: 4px;
 	display: inline-block;
 }
 
