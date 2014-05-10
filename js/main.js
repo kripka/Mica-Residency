@@ -36,8 +36,8 @@ var renderGraph = function(data){
 			clothing: "#9E9B9C",
 			health: "#9E9B9C",
 			legal: "#E51633",
-			counseling: "#E51633",
-			absent: "#E51633"
+			counseling: "#F2921E",
+			absent: "#DD521E"
 		},
 		totalQuarters = (Math.ceil(data.data.gpa.length * 10)/10),
 		totalYears = Math.ceil(totalQuarters/4),
