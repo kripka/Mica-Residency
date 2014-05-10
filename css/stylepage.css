@@ -114,10 +114,14 @@ overflow: scroll;
 	width:180px;
 }
 .studentphoto{
-	top: 92px;
 	left: 10px;
 	width: 85px;
 	height: 85px;
 	padding: 5px;
 }
 
+.privacyicon{
+	float:right;
+	padding-right: 4px;
+	padding-top: 62px;
+}
