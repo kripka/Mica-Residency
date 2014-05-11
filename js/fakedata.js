@@ -63,6 +63,7 @@ var fakedata = function(){
 		.domain([-1,1])
 		.range([gpaLow,gpaHigh]);
 		
+		
 	var student = {
 		"student":"Student A",
 		"images":[
