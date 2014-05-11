@@ -44,6 +44,23 @@ var renderGraph = function(data){
 		text_padding_right = 10,
 		block_height = 10;
 		
+		// max count scales
+		var maxCounts = {
+			tutoring: 1000,
+			community: 250,
+			enrichment: 1000,
+			life: 1000,
+			liasoning: 200,
+			rides: 1000,
+			visits: 1000,
+			food: 4,
+			clothing: 4,
+			health: 500,
+			legal: 250,
+			counseling: 1000,
+			absent: 40
+		};
+		
 			
 	// line graph group wrapper for transform
 	var lg_g = lg_svg.append('g')
@@ -277,11 +294,15 @@ var renderGraph = function(data){
 				.attr('class','hitzone hzrect');
 			}
 			
-				var maxCounts = d3.max(data[cat].values,function(d){
+				/*
+var maxCounts = d3.max(data[cat].values,function(d){
 					return d.value;
 				});
+*/
 				
-				var countColors = d3.scale.linear().domain([0,maxCounts]).range(['white',color[cat]]);
+				//console.log(cat);
+				
+				var countColors = d3.scale.linear().domain([0,maxCounts[cat]]).range(['white',color[cat]]);
 				
 				blockGroup.selectAll('.block').data(data[cat].values).enter()
 					.append('rect')
@@ -479,7 +500,6 @@ var renderGraph = function(data){
 					return i;
 				})
 				.attr('data-label',function(d,i){
-					console.log(data[i].course);
 					return data[i].course;
 				});
 			

@@ -12,13 +12,13 @@ var fakedata = function(){
 		{ name :"enrichment","type" : "counts","low":0,"high":650, "title":"Enrichment", "unit":"minutes"},
 		{ name :"life","type" : "counts","low":0,"high":650, "title":"Life Skills", "unit":"minutes"},
 		{ name :"liasoning","type" : "counts","low":0,"high":67, "title":"Teacher Liasoning", "unit":"minutes"},
-		{ name :"rides","type" : "counts","low":0,"high":120, "title":"Rides To School", "unit":"minutes"},
+		{ name :"rides","type" : "counts","low":0,"high":300, "title":"Rides To School", "unit":"minutes"},
 		{ name :"visits","type" : "counts","low":0,"high":780, "title":"House Visits", "unit":"minutes"},
 		{ name :"food","type" : "bin", "title": "Food", "unit":"qual"},
 		{ name :"clothing","type" : "bin", "title":"Clothing", "unit":"qual"},
 		{ name :"health","type" : "counts","low":0,"high":78, "title":"Health", "unit":"minutes"},
 		{ name :"legal","type" : "counts","low":0,"high":45, "title":"Legal", "unit":"minutes"},
-		{ name :"counseling","type" : "counts","low":0,"high":45, "title":"Counseling", "unit":"minutes"},
+		{ name :"counseling","type" : "counts","low":0,"high":200, "title":"Counseling", "unit":"minutes"},
 	];
 	
 	// absenteeism
