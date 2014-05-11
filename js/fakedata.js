@@ -116,7 +116,7 @@ var fakedata = function(){
 		//gpa
 		temp = {};
 		//temp.value =  randomIntFromInterval(gpaLow,gpaHigh);
-		temp.value = ls(noise.simplex2(i/8, 0));
+		temp.value = ls(noise.simplex2(i/8, 0)).toFixed(2);
 		student.data.gpa.push(temp);
 		
 		// services

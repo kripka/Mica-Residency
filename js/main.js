@@ -1,3 +1,5 @@
+$(function(){
+
 var renderGraph = function(data){
 	
 
@@ -174,7 +176,10 @@ var renderGraph = function(data){
 		.attr('class',function(d,i){
 			return 'hitzone tooltipped dots quarter-' + i;
 		})
-		.attr('data-label',"GPA");
+		.attr('data-label',"GPA")
+		.attr('data-quarter',function(d,i){
+			return i;
+		});
 		
 	/******* BLOCK GRAPH *********/
 	
@@ -474,8 +479,8 @@ var renderGraph = function(data){
 				.attr('data-quarter',function(d,i){
 					return i;
 				})
-				.attr('data-label',function(d){
-					return d.name;
+				.attr('data-label',function(d,i){
+					return data[i].course;
 				});
 			
 		}
@@ -532,6 +537,7 @@ var renderGraph = function(data){
 			
 	};
 	
+/*
 	
 	var renderHitZones = function(div,data){
 			
@@ -586,9 +592,11 @@ var renderGraph = function(data){
 		
 			
 	};
+*/
 	
 	//renderHitZones("#line-graph",data.data.gpa);
 	//renderHitZones("#info",data.data.gpa);
+	
 	
 	// hit zone actions
 	d3.selectAll('.hitzone').on('mouseenter',function(){
@@ -611,7 +619,7 @@ var renderGraph = function(data){
 	var tooltip,mousezone;
 
 	var renderTooltip = function(){
-		tooltip = d3.select('.dataview').append('div')
+		tooltip = d3.select('body').append('div')
 			.attr('id','tooltip')
 			.style('position','absolute');
 			
@@ -624,19 +632,25 @@ var renderGraph = function(data){
 	
 	renderTooltip();
 	
-	 
+	var currentMousePos = { x: -1, y: -1 };
+    $(document).mousemove(function(event) {
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
+    });
+    
 	
 	d3.selectAll('.tooltipped').on('mouseenter',function(){
+		
 		var that = d3.select(this),
-			value = that[0][0].__data__.value,
+			value = (that[0][0].__data__.value) ? that[0][0].__data__.value : that[0][0].__data__.grade,
 			quarter = that.attr('data-quarter'),
 			label = that.attr('data-label');
 			
+		console.log(currentMousePos);
+						
 		var x = (that.attr('x')) ? that.attr('x') : that.attr('cx');
 		var y = (that.attr('y')) ? that.attr('y') : that.attr('cy');
-				
-					
-			
+							
 		tooltip.select('p').text(value);
 		
 		if (label) {
@@ -646,10 +660,18 @@ var renderGraph = function(data){
 		}
 	
 		tooltip.style({
-			left:d3.mouse(this)[0]+"px",
-			top:d3.mouse(this)[1]+"px",
+			left:currentMousePos.x+"px",
+			top:currentMousePos.y+"px",
 			opacity:1
 		});
+		
+		
+			offElements = d3.selectAll('rect:not(.quarter-' +quarter +'):not(.hzrect),circle:not(.quarter-'+quarter+'),#lg-content path' ).transition().style('opacity',.25);
+
+				
+			moveFloatingHead(quarter);
+		
+		
 	});
 	
 	d3.selectAll('.tooltipped').on('mouseleave',function(){
@@ -657,6 +679,10 @@ var renderGraph = function(data){
 			left:"-99999px",
 			opacity:0
 		});
+		
+		d3.selectAll('rect:not(.hzrect),circle,#lg-content path').transition().style('opacity',1);
+				
+				head_div.transition().style('opacity',0);
 	});
 	
 
@@ -665,6 +691,9 @@ var renderGraph = function(data){
 
 
 renderGraph(fakedata());
+
+
+});
 
 /*
 d3.json("http://localhost:8000/js/imp.json",function(data){
