@@ -479,6 +479,7 @@ var renderGraph = function(data){
 					return i;
 				})
 				.attr('data-label',function(d,i){
+					console.log(data[i].course);
 					return data[i].course;
 				});
 			
@@ -684,7 +685,7 @@ var renderGraph = function(data){
 		}
 	
 		tooltip.style({
-			left:Math.floor(currentMousePos.x)+"px",
+			left:(Math.floor(currentMousePos.x) - 10)+"px",
 			top:(Math.floor(currentMousePos.y)-40)+"px",
 			opacity:1
 		});
@@ -713,7 +714,7 @@ var renderGraph = function(data){
 	$('body').on('mousemove',function(){
 		if ($("#tooltip").css("opacity") == 1){
 			$("#tooltip").css({
-				"left":Math.floor(currentMousePos.x)+"px",
+				"left":Math.floor(currentMousePos.x-10)+"px",
 				"top":Math.floor(currentMousePos.y - 40)+"px"
 			});
 		
