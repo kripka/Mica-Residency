@@ -71,7 +71,7 @@ overflow: scroll;
 	padding-top: 3px;
 }
 
-/*.dashboarditems{
+.dashboarditems{
 	margin-top: 20px;
 }
 
@@ -84,7 +84,7 @@ overflow: scroll;
 	margin-top: 1px;
 	color: #1B89A0;
 	background-color: #E8E7E8
-}*/
+}
 
 .volunteers li{
 	font-size: 12px;
@@ -169,3 +169,10 @@ bottom: 0px;
 overflow: scroll;
 }
 
+.Thread-Services h2 {
+	position: fixed;
+	width: 100%;
+}
+.Thread-Services svg {
+	margin-top: 18px;
+}
