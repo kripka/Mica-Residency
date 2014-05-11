@@ -1,0 +1,27 @@
+.tooltip{
+font-size: 10px;
+color: #6A736F;
+background-color: #FFFFFF;
+margin-right: 2px;
+padding:2px;
+opacity: 0.5;
+position: absolute;
+top: 100px;
+left: 100px;
+}
+
+.value{
+font-size: 8px;
+color: #1B89A0;
+}
+
+.arrow{
+position: absolute;
+border-top: solid 8px #FFFFFF;
+border-left: solid 8px transparent;
+border-right: solid 8px transparent;
+left: 3px;
+bottom: -6px;
+
+}
+

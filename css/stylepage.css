@@ -120,6 +120,13 @@ bottom: 0px;
 overflow: scroll;
 }
 
+.tooltip{
+	position: absolute;
+	top: -15px;
+	left: 3px;
+	color: #E8E7E8;
+	border: none;
+}
 
 .extras{
 	margin-top: 20px;
