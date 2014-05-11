@@ -71,17 +71,20 @@ overflow: scroll;
 	padding-top: 3px;
 }
 
-.dashboarditems{
-	margin-top: 80px
+/*.dashboarditems{
+	margin-top: 20px;
 }
+
 
 .dashboarditems li{
 	font-size: 12px;
-	padding: 7px;
-	margin: 4px;
-	color: #6A736F;
+	padding: 10px;
+	margin-left: 8px;
+	margin-right: 8px;
+	margin-top: 1px;
+	color: #1B89A0;
 	background-color: #E8E7E8
-}
+}*/
 
 .volunteers li{
 	font-size: 12px;
@@ -120,17 +123,10 @@ bottom: 0px;
 overflow: scroll;
 }
 
-.tooltip{
-	position: absolute;
-	top: -15px;
-	left: 3px;
-	color: #E8E7E8;
-	border: none;
-}
 
 .extras{
-	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-top: 8px;
+	margin-bottom: 8px;
 	width:180px;
 }
 .studentphoto{
@@ -146,10 +142,16 @@ overflow: scroll;
 
 .privacyicon{
 	padding-right: 4px;
+	padding-left: 6px;
 	display: inline-block;
 	vertical-align: baseline;
 }
 
+.dashboardside{
+	padding: 4px;
+	margin-top: 10px;
+	width: 170px;
+}
 #line-graph{
 position: absolute;
 left: 0;
