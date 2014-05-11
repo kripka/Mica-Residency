@@ -645,9 +645,7 @@ var renderGraph = function(data){
 			quarter = that.attr('data-quarter'),
 			label = that.attr('data-label'),
 			units = that.attr('data-units');
-			
-		console.log(units);
-					
+								
 		if (units) {
 			if (units == 'qual') {
 				switch (value) {
@@ -686,10 +684,11 @@ var renderGraph = function(data){
 		}
 	
 		tooltip.style({
-			left:currentMousePos.x+"px",
-			top:(currentMousePos.y-40)+"px",
+			left:Math.floor(currentMousePos.x)+"px",
+			top:(Math.floor(currentMousePos.y)-40)+"px",
 			opacity:1
 		});
+		
 		
 		
 			offElements = d3.selectAll('rect:not(.quarter-' +quarter +'):not(.hzrect),circle:not(.quarter-'+quarter+'),#lg-content path' ).transition().style('opacity',.25);
