@@ -646,7 +646,6 @@ var renderGraph = function(data){
 			quarter = that.attr('data-quarter'),
 			label = that.attr('data-label');
 			
-		console.log(currentMousePos);
 						
 		var x = (that.attr('x')) ? that.attr('x') : that.attr('cx');
 		var y = (that.attr('y')) ? that.attr('y') : that.attr('cy');
@@ -661,7 +660,7 @@ var renderGraph = function(data){
 	
 		tooltip.style({
 			left:currentMousePos.x+"px",
-			top:currentMousePos.y+"px",
+			top:(currentMousePos.y-40)+"px",
 			opacity:1
 		});
 		
