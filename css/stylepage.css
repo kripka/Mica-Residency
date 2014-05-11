@@ -167,3 +167,10 @@ bottom: 0px;
 overflow: scroll;
 }
 
+.Thread-Services h2 {
+	position: fixed;
+	width: 100%;
+}
+.Thread-Services svg {
+	margin-top: 18px;
+}
