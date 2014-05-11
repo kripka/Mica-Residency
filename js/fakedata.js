@@ -67,13 +67,13 @@ var fakedata = function(){
 		"student":"Student A",
 		"images":[
 			{year: 1, path: "/images_thread/photodiquann1.png"},
-			{year: 2},
+			{year: 2, path: "/images_thread/photodiquann1.png"},
 			{year: 3, path: "/images_thread/photodiquann2.png"},
 			{year: 4, path: "/images_thread/photodiquann3.png"},
-			{year: 5},
-			{year: 6},
+			{year: 5, path: "/images_thread/photodiquann3.png"},
+			{year: 6, path: "/images_thread/photodiquann3.png"},
 			{year: 7, path: "/images_thread/photodiquann4.png"},
-			{year: 8}
+			{year: 8, path: "/images_thread/photodiquann4.png"}
 		],
 		"data" : {
 			"gpa":[],

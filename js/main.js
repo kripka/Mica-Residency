@@ -139,6 +139,18 @@ var renderGraph = function(data){
 		.datum(data.data.gpa)
 		.attr('d',line)
 		.attr('class','gpa-path');
+		
+	// hit zones
+	for (var i = 0;i<totalQuarters;i++){
+	lg_graph.append('rect')
+		.attr('x',xScale(i) - (xScale(1)/2))
+		.attr('y',0 )
+		.attr('width',xScale(1))
+		.attr('height',full_height+ lg_padding_bottom)
+		.style('opacity',0)
+		.attr('data-quarter',i)
+		.attr('class','hitzone hzrect');
+	}
 	
 	// gpa dots
 	lg_graph.selectAll('.dots')
@@ -160,8 +172,9 @@ var renderGraph = function(data){
 			}
 		})
 		.attr('class',function(d,i){
-			return 'dots quarter-' + i;
-		});
+			return 'hitzone tooltipped dots quarter-' + i;
+		})
+		.attr('data-label',"GPA");
 		
 	/******* BLOCK GRAPH *********/
 	
@@ -247,7 +260,17 @@ var renderGraph = function(data){
 				.attr('transform','translate(0,'+yPlacer(counter -1)+')');
 			
 						
-			
+			// hit zones
+			for (var i = 0;i<totalQuarters;i++){
+			blockGroup.append('rect')
+				.attr('x',xScale(i) )
+				.attr('y',0 )
+				.attr('width',xScale(1))
+				.attr('height',line_height)
+				.style('opacity',0)
+				.attr('data-quarter',i)
+				.attr('class','hitzone hzrect');
+			}
 			
 				var maxCounts = d3.max(data[cat].values,function(d){
 					return d.value;
@@ -264,14 +287,15 @@ var renderGraph = function(data){
 					.attr('width',full_length/totalQuarters)
 					.attr('height',block_height)
 					.attr('class',function(d,i){
-						return 'block quarter-'+i;
+						return 'hitzone tooltipped block quarter-'+i;
 					})
 					.style('fill',function(d){
 						return countColors(d.value);
 					})
 					.attr('data-quarter',function(d,i){
 						return i;
-					});
+					})
+					.attr('data-label',data[cat].title);
 
 
 			
@@ -406,12 +430,28 @@ var renderGraph = function(data){
 	
 		}
 		
+	
+		
 		var passColors = d3.scale.linear().domain([65,100]).range([d3.rgb(color.passGreen).brighter(1),d3.rgb(color.passGreen).darker(1)]);
 		
 		var place;
 		// go thru each class
 		for (var c in categorySort) {
+		
 			place = d3.select('#'+c);
+				// hit zones
+			for (var i = 0;i<totalQuarters;i++){
+			place.append('rect')
+				.attr('x',xScale(i) )
+				.attr('y',0 )
+				.attr('width',xScale(1))
+				.attr('height',line_height)
+				.style('opacity',0)
+				.attr('data-quarter',i)
+				.attr('class','hitzone hzrect');
+			}
+		
+			
 			
 			place.selectAll('.block').data(categorySort[c]).enter()
 				.append('rect')
@@ -422,7 +462,7 @@ var renderGraph = function(data){
 				.attr('width',full_length/totalQuarters)
 				.attr('height',block_height)
 				.attr('class',function(d,i){
-					return 'block year-'+d.year+' quarter-'+i + ' '+c;
+					return 'hitzone tooltipped block year-'+d.year+' quarter-'+i + ' '+c;
 				})
 				.style('fill',function(d){
 					if (d.grade < 65) {
@@ -433,6 +473,9 @@ var renderGraph = function(data){
 				})
 				.attr('data-quarter',function(d,i){
 					return i;
+				})
+				.attr('data-label',function(d){
+					return d.name;
 				});
 			
 		}
@@ -544,10 +587,77 @@ var renderGraph = function(data){
 			
 	};
 	
-	renderHitZones("#line-graph",data.data.gpa);
-	renderHitZones("#info",data.data.gpa);
+	//renderHitZones("#line-graph",data.data.gpa);
+	//renderHitZones("#info",data.data.gpa);
 	
+	// hit zone actions
+	d3.selectAll('.hitzone').on('mouseenter',function(){
+		var quarter = d3.select(this).attr("data-quarter");
 		
+			
+								
+				offElements = d3.selectAll('rect:not(.quarter-' +quarter +'):not(.hzrect),circle:not(.quarter-'+quarter+'),#lg-content path' ).transition().style('opacity',.25);
+
+				
+				moveFloatingHead(quarter);
+	});
+	
+	d3.selectAll('.hitzone').on('mouseleave',function(){
+		d3.selectAll('rect:not(.hzrect),circle,#lg-content path').transition().style('opacity',1);
+				
+				head_div.transition().style('opacity',0);
+	});
+	
+	var tooltip,mousezone;
+
+	var renderTooltip = function(){
+		tooltip = d3.select('.dataview').append('div')
+			.attr('id','tooltip')
+			.style('position','absolute');
+			
+		tooltip.append('h1');
+		tooltip.append('p');
+		
+					
+	};
+	
+	renderTooltip();
+	
+	 
+	
+	d3.selectAll('.tooltipped').on('mouseenter',function(){
+		var that = d3.select(this),
+			value = that[0][0].__data__.value,
+			quarter = that.attr('data-quarter'),
+			label = that.attr('data-label');
+			
+		var x = (that.attr('x')) ? that.attr('x') : that.attr('cx');
+		var y = (that.attr('y')) ? that.attr('y') : that.attr('cy');
+				
+					
+			
+		tooltip.select('p').text(value);
+		
+		if (label) {
+			tooltip.select('h1').text(label);
+		} else {
+			tooltip.select('h1').text('');
+		}
+	
+		tooltip.style({
+			left:d3.mouse(this)[0]+"px",
+			top:d3.mouse(this)[1]+"px",
+			opacity:1
+		});
+	});
+	
+	d3.selectAll('.tooltipped').on('mouseleave',function(){
+		tooltip.style({
+			left:"-99999px",
+			opacity:0
+		});
+	});
+	
 
 }
 
