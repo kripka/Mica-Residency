@@ -7,8 +7,12 @@ opacity: 0.5;
 position: absolute;
 top: 100px;
 left: 100px;
+border-left: solid 1px #1B89A0;
+border-bottom: solid 1px #1B89A0;
 pointer-events: none;
 }
+
+
 
 #tooltip p{
 font-size: 10px;
@@ -22,11 +26,21 @@ color: #1B89A0;
 
 #tooltip .arrow {
 position: absolute;
-border-top: solid 8px #FFFFFF;
+border-top: solid 8px #1B89A0;
 border-left: solid 8px transparent;
 border-right: solid 8px transparent;
 left: 3px;
-bottom: -6px;
-
+bottom: -8px;
 }
+
+
+
+#tooltip .arrow div{
+position: absolute;
+border-top: solid 7px #FFFFFF;
+border-left: solid 7px transparent;
+border-right: solid 7px transparent;
+left: -7px;
+bottom: 1px;
+
 
