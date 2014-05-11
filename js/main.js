@@ -507,7 +507,7 @@ var renderGraph = function(data){
 				.style('fill',color.head_bg);
 				
 			var head_img = head_div.append('img')
-				.attr('src',"/images_thread/trans.gif")
+				.attr('src',"images_thread/trans.gif")
 				.attr('data-year', 'null');
 	};
 	renderFloatingHead();
