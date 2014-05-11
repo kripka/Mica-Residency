@@ -617,6 +617,7 @@ var renderGraph = function(data){
 			
 		tooltip.append('h1');
 		tooltip.append('p');
+		tooltip.append('div').attr('class','arrow');
 		
 					
 	};

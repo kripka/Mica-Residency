@@ -1,5 +1,4 @@
-.tooltip{
-font-size: 10px;
+#tooltip {
 color: #6A736F;
 background-color: #FFFFFF;
 margin-right: 2px;
@@ -10,12 +9,17 @@ top: 100px;
 left: 100px;
 }
 
-.value{
+#tooltip p{
+font-size: 10px;
+color: #1B89A0;
+}
+
+#tooltip h1{
 font-size: 8px;
 color: #1B89A0;
 }
 
-.arrow{
+#tooltip .arrow {
 position: absolute;
 border-top: solid 8px #FFFFFF;
 border-left: solid 8px transparent;
