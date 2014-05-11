@@ -710,6 +710,16 @@ var renderGraph = function(data){
 				head_div.transition().style('opacity',0);
 	});
 	
+	$('body').on('mousemove',function(){
+		if ($("#tooltip").css("opacity") == 1){
+			$("#tooltip").css({
+				"left":Math.floor(currentMousePos.x)+"px",
+				"top":Math.floor(currentMousePos.y - 40)+"px"
+			});
+		
+		}		
+	});
+	
 
 }
 
