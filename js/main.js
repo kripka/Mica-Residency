@@ -300,9 +300,8 @@ var renderGraph = function(data){
 					.attr('data-quarter',function(d,i){
 						return i;
 					})
-					.attr('data-label',data[cat].title);
-
-
+					.attr('data-label',data[cat].title)
+					.attr('data-units',data[cat].unit);
 			
 			
 			// increment counter
@@ -644,7 +643,35 @@ var renderGraph = function(data){
 		var that = d3.select(this),
 			value = (that[0][0].__data__.value) ? that[0][0].__data__.value : that[0][0].__data__.grade,
 			quarter = that.attr('data-quarter'),
-			label = that.attr('data-label');
+			label = that.attr('data-label'),
+			units = that.attr('data-units');
+			
+		console.log(units);
+					
+		if (units) {
+			if (units == 'qual') {
+				switch (value) {
+					case 0:
+						value = 'none';
+						break;
+					case 1:
+						value = "Low";
+						break;
+					case 2:
+						value = "Medium-Low";
+						break;
+					case 3:
+						value = "Medium-High";
+						break;
+					case 4:
+						value = "High";
+						break;
+				}
+			} else {
+				value += ' ';
+				value+=units;
+			}
+		}
 			
 						
 		var x = (that.attr('x')) ? that.attr('x') : that.attr('cx');

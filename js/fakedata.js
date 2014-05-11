@@ -7,23 +7,23 @@ var fakedata = function(){
 		
 	// services variables
 	var services = [
-		{ name :"tutoring","type" : "counts","low":0,"high":460, "title":"Tutoring"},
-		{ name :"community","type" : "counts","low":0,"high":45, "title":"Community Service"},
-		{ name :"enrichment","type" : "counts","low":0,"high":650, "title":"Enrichment"},
-		{ name :"life","type" : "counts","low":0,"high":650, "title":"Life Skills"},
-		{ name :"liasoning","type" : "counts","low":0,"high":67, "title":"Teacher Liasoning"},
-		{ name :"rides","type" : "counts","low":0,"high":120, "title":"Rides To School"},
-		{ name :"visits","type" : "counts","low":0,"high":780, "title":"House Visits"},
-		{ name :"food","type" : "bin", "title": "Food"},
-		{ name :"clothing","type" : "bin", "title":"Clothing"},
-		{ name :"health","type" : "counts","low":0,"high":78, "title":"Health"},
-		{ name :"legal","type" : "counts","low":0,"high":45, "title":"Legal"},
-		{ name :"counseling","type" : "counts","low":0,"high":45, "title":"Counseling"},
+		{ name :"tutoring","type" : "counts","low":0,"high":460, "title":"Tutoring", "unit":"minutes"},
+		{ name :"community","type" : "counts","low":0,"high":45, "title":"Community Service", "unit":"minutes"},
+		{ name :"enrichment","type" : "counts","low":0,"high":650, "title":"Enrichment", "unit":"minutes"},
+		{ name :"life","type" : "counts","low":0,"high":650, "title":"Life Skills", "unit":"minutes"},
+		{ name :"liasoning","type" : "counts","low":0,"high":67, "title":"Teacher Liasoning", "unit":"minutes"},
+		{ name :"rides","type" : "counts","low":0,"high":120, "title":"Rides To School", "unit":"minutes"},
+		{ name :"visits","type" : "counts","low":0,"high":780, "title":"House Visits", "unit":"minutes"},
+		{ name :"food","type" : "bin", "title": "Food", "unit":"qual"},
+		{ name :"clothing","type" : "bin", "title":"Clothing", "unit":"qual"},
+		{ name :"health","type" : "counts","low":0,"high":78, "title":"Health", "unit":"minutes"},
+		{ name :"legal","type" : "counts","low":0,"high":45, "title":"Legal", "unit":"minutes"},
+		{ name :"counseling","type" : "counts","low":0,"high":45, "title":"Counseling", "unit":"minutes"},
 	];
 	
 	// absenteeism
 	var absent = [
-		{ name :"absent","type" : "counts","low":0,"high":40, "title":"Absences"},
+		{ name :"absent","type" : "counts","low":0,"high":40, "title":"Absences", "unit":"days"},
 	];
 	
 	//classes	
@@ -94,6 +94,7 @@ var fakedata = function(){
 		student.data.services[services[x].name].values = [];
 		student.data.services[services[x].name].type = services[x].type;
 		student.data.services[services[x].name].title = services[x].title;
+		student.data.services[services[x].name].unit = services[x].unit;
 	}
 	
 	// add absent to object
@@ -102,6 +103,7 @@ var fakedata = function(){
 		student.data.absenteeism[absent[x].name].values = [];
 		student.data.absenteeism[absent[x].name].type = absent[x].type;
 		student.data.absenteeism[absent[x].name].title = absent[x].title;
+		student.data.absenteeism[absent[x].name].unit = absent[x].unit;
 	}
 		
 	
